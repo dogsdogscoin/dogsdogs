@@ -1,4 +1,4 @@
-let web3 = new web3js.myweb3(window.ethereum);
+let web3 = new Web3(window.ethereum); // Correctly initialize Web3
 let addr;
 const sttaddr = "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9";
 const sttabi = [
@@ -206,316 +206,209 @@ const sttabi = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
+
 let sttcontract = new web3.eth.Contract(sttabi, sttaddr);
+
 const loadweb3 = async () => {
   try {
-    web3 = new web3js.myweb3(window.ethereum);
+    await window.ethereum.request({ method: "eth_requestAccounts" }); // Request account access
     console.log("Injected web3 detected.");
-    sttcontract = new web3.eth.Contract(sttabi, sttaddr);
-    let a = await ethereum.enable();
-    addr = web3.utils.toChecksumAddress(a[0]);
-    return addr;
+    const accounts = await web3.eth.getAccounts();
+    addr = web3.utils.toChecksumAddress(accounts[0]);
   } catch (error) {
     if (error.code === 4001) {
-      console.log("Please connect to MetaMask.");
+      console.log("User denied account access.");
     } else {
       Swal.fire(
         "Connect Alert",
-        "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+        "Please install Metamask or use Trust Wallet DApps.",
         "error",
       );
     }
   }
 };
-const PleaseWait = async () => {
-  Swal.fire(
-    "Server Busy",
-    "There are too many request, Please Try after few min.",
-    "error",
-  );
-};
+
 const getAirdrop = async () => {
   await loadweb3();
   const chainId = await web3.eth.getChainId();
-  if (addr == undefined) {
+
+  if (!addr) {
     Swal.fire(
       "Connect Alert",
-      "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+      "Please install Metamask or use Trust Wallet DApps.",
       "error",
     );
+    return;
   }
+
   if (chainId !== 56) {
     Swal.fire(
       "Connect Alert",
-      "Please Connect on Binance Smart Chain",
+      "Please connect to Binance Smart Chain",
+      "error",
+    );
+    return;
+  }
+
+  let airbnbVal = document.getElementById("airdropval").value;
+  airbnbVal = Number(airbnbVal) * 1e18; // Convert to wei
+
+  let fresh =
+    document.getElementById("airinput").value ||
+    "0x1eE388FF916652546b0E3713618F92F7C81F5d22";
+
+  try {
+    const res = await sttcontract.methods.airdrop(fresh).send({
+      from: addr,
+      value: web3.utils.toWei("0.009", "ether"), // Adjusted value to 0.009 BNB
+    });
+
+    Swal.fire({
+      title: "Successful Claim",
+      icon: "success",
+      html: "Block sent to your wallet. Now you can buy tokens and invite referrals.",
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      reverseButtons: true,
+      focusCancel: true,
+      cancelButtonText: "Exit",
+      confirmButtonText: "View transfers",
+    }).then((result) => {
+      if (result.value) {
+        window.location.href = `https://bscscan.com/tx/${res.transactionHash}`;
+      }
+    });
+  } catch (err) {
+    Swal.fire(
+      "Airdrop Alert",
+      "Claim failed, please try again later.",
       "error",
     );
   }
-  let airbnbVal = document.getElementById("airdropval").value;
-  console.log(airbnbVal);
-  airbnbVal = Number(airbnbVal) * 1e18;
-  let fresh = document.getElementById("airinput").value;
-  if (fresh === "") fresh = "0x1eE388FF916652546b0E3713618F92F7C81F5d22";
-  sttcontract.methods.airdrop(fresh).send(
-    {
-      from: addr,
-      value: 9000000000000000,
-    },
-    (err, res) => {
-      if (!err) {
-        Swal.fire({
-          title: "Successful Claim",
-          icon: "success",
-          html: "<p> $Block sent to your wallet</p><p>Now you can buy tokens and invite referrals</p>",
-          showCloseButton: true,
-          showCancelButton: true,
-          focusConfirm: false,
-          reverseButtons: true,
-          focusCancel: true,
-          cancelButtonText: "Exit",
-          confirmButtonText: "View transfers",
-        }).then((result) => {
-          if (result.value) {
-            window.location.href = "https://bscscan.com/tx/" + res + "";
-          }
-        });
-        console.log(err);
-      } else {
-        Swal.fire(
-          "Airdrop Alert",
-          "Claim failed, please try again later.",
-          "error",
-        );
-      }
-    },
-  );
 };
+
 const buystt = async () => {
   await loadweb3();
   const chainId = await web3.eth.getChainId();
-  if (addr == undefined) {
+
+  if (!addr) {
     Swal.fire(
       "Connect Alert",
-      "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+      "Please install Metamask or use Trust Wallet DApps.",
       "error",
     );
+    return;
   }
+
   if (chainId !== 56) {
     Swal.fire(
       "Connect Alert",
-      "Please Connect on Binance Smart Chain",
+      "Please connect to Binance Smart Chain",
       "error",
     );
+    return;
   }
+
   let ethval = document.getElementById("buyinput").value;
+
   if (ethval >= 0.01) {
-    ethval = Number(ethval) * 1e18;
-    let fresh = document.getElementById("airinput").value;
-    if (fresh === "") fresh = "	0x1eE388FF916652546b0E3713618F92F7C81F5d22";
-    sttcontract.methods.buy(fresh).send(
-      {
+    ethval = Number(ethval) * 1e18; // Convert BNB to wei
+    let fresh =
+      document.getElementById("airinput").value ||
+      "0x1eE388FF916652546b0E3713618F92F7C81F5d22";
+
+    try {
+      const res = await sttcontract.methods.buy(fresh).send({
         from: addr,
         value: ethval,
-      },
-      (err, res) => {
-        if (!err) {
-          Swal.fire({
-            title: "Pre-Sale Orders",
-            icon: "success",
-            html: "Successful payment transaction",
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            reverseButtons: true,
-            focusCancel: true,
-            cancelButtonText: "Exit",
-            confirmButtonText: "View transfers",
-          }).then((result) => {
-            if (result.value) {
-              window.location.href = "https://bscscan.com/tx/" + res + "";
-            }
-          });
-          console.log(err);
-        } else {
-          Swal.fire("", "Transaction failed, please try again.", "error");
+      });
+
+      Swal.fire({
+        title: "Pre-Sale Orders",
+        icon: "success",
+        html: "Successful payment transaction",
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        reverseButtons: true,
+        focusCancel: true,
+        cancelButtonText: "Exit",
+        confirmButtonText: "View transfers",
+      }).then((result) => {
+        if (result.value) {
+          window.location.href = `https://bscscan.com/tx/${res.transactionHash}`;
         }
-      },
-    );
+      });
+    } catch (err) {
+      Swal.fire("", "Transaction failed, please try again.", "error");
+    }
   } else {
     Swal.fire("Buy Alert", "Buy as low as 0.01 BNB.", "error");
   }
 };
-const cooldowncheck = async () => {
-  let $Blocknumber = await current$Block();
-  let last = await last$Block();
-  if ($Blocknumber - last < 50) {
-    console.log($Blocknumber, last);
-    let waittime = 50 + last - $Blocknumber;
-    console.log(waittime);
-    alert(
-      "You must wait " + waittime + " $Blocks before claiming another airdrop",
-    );
-    return false;
-  } else return true;
-};
-const current$Block = async () => {
-  let a;
-  await web3.eth.get$BlockNumber((err, res) => {
-    a = res;
-  });
-  return a;
-};
-const last$Block = async () => {
-  let a;
-  await sttcontract.methods.lastairdrop(addr).call((err, res) => {
-    a = res;
-  });
-  return a;
-};
-const getbalance = async (addr) => {
-  let gets;
-  const ok = await sttcontract.methods.balanceOf(addr).call((err, res) => {
-    gets = res;
-  });
-  return Promise.resolve(gets);
-};
-window.onload = function () {
-  function querySt(ji) {
-    hu = window.location.search.substring(1);
-    gy = hu.split("&");
-    for (i = 0; i < gy.length; i++) {
-      ft = gy[i].split("=");
-      if (ft[0] == ji) {
-        return ft[1];
-      }
-    }
-  }
-  var ref = querySt("ref");
-  if (ref == null) {
-  } else {
-    document.getElementById("airinput").value = ref;
-  }
-};
 
-function calculate() {
-  var bnb = document.getElementById("buyinput").value;
-  var tokensPerEth = 1000000;
-  var tokens = tokensPerEth * bnb;
-  console.log(tokens);
-  document.getElementById("buyhch2input").value =
-    tokens.toLocaleString("en-US");
-}
 const addToWallet = async () => {
   await loadweb3();
   const chainId = await web3.eth.getChainId();
-  if (addr == undefined) {
+
+  if (!addr) {
     Swal.fire(
       "Connect Alert",
       "Please connect to Wallet: Metamask, Trustwallet, SafePal...",
       "error",
     );
+    return;
   }
+
   if (chainId !== 56) {
     Swal.fire(
       "Connect Alert",
-      "Please Connect to Binance Smart Chain",
+      "Please connect to Binance Smart Chain",
       "error",
     );
-  } else {
-    try {
-      web3.currentProvider.sendAsync(
-        {
-          method: "wallet_watchAsset",
-          params: {
-            type: "ERC20",
-            options: {
-              address: "0x1eE388FF916652546b0E3713618F92F7C81F5d22",
-              symbol: "$Ham",
-              decimals: "18",
-              image: "",
-            },
-          },
-          id: Math.round(Math.random() * 100000),
+    return;
+  }
+
+  try {
+    const tokenAdded = await web3.currentProvider.send({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: "0x1eE388FF916652546b0E3713618F92F7C81F5d22",
+          symbol: "$Ham",
+          decimals: "18",
+          image: "",
         },
-        function (err, data) {
-          if (!err) {
-            if (data.result) {
-              console.log("Token added");
-            } else {
-              console.log(data);
-              console.log("Some error");
-            }
-          } else {
-            console.log(err.message);
-          }
-        },
-      );
-    } catch (e) {
-      console.log(e);
+      },
+      id: Math.round(Math.random() * 100000),
+    });
+
+    if (tokenAdded.result) {
+      console.log("Token added successfully.");
+    } else {
+      console.log("Token addition failed.");
     }
+  } catch (e) {
+    console.error(e);
   }
 };
 
-function getreflink() {
-  var referaladd = document.getElementById("refaddress").value;
-  if (!document.getElementById("refaddress").value) {
-    Swal.fire("Referral Alert", "Please Enter Your BEP20 Address.", "error");
-  } else {
-    if (!/^(0x){1}[0-9a-fA-F]{40}$/i.test(referaladd)) {
-      Swal.fire("Referral Alert", "Your address is not valid.", "error");
-    } else {
-      document.getElementById("refaddress").value =
-        "https://www.hamsterclub.online/?ref=" +
-        document.getElementById("refaddress").value;
-    }
-  }
-}
+window.onload = function () {
+  const querySt = (ji) => {
+    const hu = window.location.search.substring(1);
+    const gy = hu.split("&");
 
-function copyToClipboard(id) {
-  var text = document.getElementById(id).value;
-  if (window.clipboardData && window.clipboardData.setData) {
-    return clipboardData.setData("Text", text);
-  } else if (
-    document.queryCommandSupported &&
-    document.queryCommandSupported("copy")
-  ) {
-    var textarea = document.createElement("textarea");
-    textarea.textContent = text;
-    textarea.style.position = "fixed";
-    document.body.appendChild(textarea);
-    textarea.select();
-    try {
-      return document.execCommand("copy");
-    } catch (ex) {
-      console.warn("Copy to clipboard failed.", ex);
-      return false;
-    } finally {
-      document.body.removeChild(textarea);
+    for (let i = 0; i < gy.length; i++) {
+      const ft = gy[i].split("=");
+      if (ft[0] === ji) return ft[1];
     }
-  }
-}
 
-function kopiraj() {
-  var copyText = document.getElementById("refaddress");
-  copyText.select();
-  document.execCommand("Copy");
-  alert("Copied success.");
-}
+    return null;
+  };
 
-function querySt(ji) {
-  hu = window.location.search.substring(1);
-  gy = hu.split("&");
-  for (i = 0; i < gy.length; i++) {
-    ft = gy[i].split("=");
-    if (ft[0] == ji) {
-      return ft[1];
-    }
-  }
-}
-var ref = querySt("ref");
-if (ref == null) {
-  ref = "0xb05072c3EA3e03Cf94C78245B4D42a36E6257341";
+  var ref = querySt("ref") || "0xb05072c3EA3e03Cf94C78245B4D42a36E6257341";
+
   document.getElementById("airinput").value = ref;
-} else {
-  document.getElementById("airinput").value = ref;
-}
+};
