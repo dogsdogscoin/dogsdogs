@@ -1,0 +1,200 @@
+Uri: http://www.shbtok.website/
+File Name: C:\Downloaded Web Sites\www.shbtok.website\index.htm
+Content Type: text/html
+
+Uri: http://www.shbtok.website/logo.png
+File Name: C:\Downloaded Web Sites\www.shbtok.website\logo.png
+Content Type: image/png
+
+Uri: http://www.shbtok.website/css/bootstrap.min.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\bootstrap.min.css
+Content Type: text/css
+
+Uri: http://www.shbtok.website/css/plugin.min.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\plugin.min.css
+Content Type: text/css
+
+Uri: http://www.shbtok.website/css/all.min.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\all.min.css
+Content Type: text/css
+
+Uri: https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css2.css
+Content Type: text/css
+
+Uri: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\ajax\libs\font-awesome\6.4.0\css\all.min.css
+Content Type: text/css
+
+Uri: http://www.shbtok.website/css/style.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\style.css
+Content Type: text/css
+
+Uri: http://www.shbtok.website/css/responsive.css
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\responsive.css
+Content Type: text/css
+
+Uri: https://bscscan.com/token/0x2fbD3252CD486eB95d39fDD6cAE03e5D5Ff324b0
+File Name: C:\Downloaded Web Sites\www.shbtok.website\token\0x2fbD3252CD486eB95d39fDD6cAE03e5D5Ff324b0.html
+Content Type: text/html
+
+Uri: https://t.me/ShibaInu_Dogecoinkiller
+File Name: C:\Downloaded Web Sites\www.shbtok.website\ShibaInu_Dogecoinkiller.html
+Content Type: text/html
+
+Uri: http://www.shbtok.website/galaxy.jpg
+File Name: C:\Downloaded Web Sites\www.shbtok.website\galaxy.jpg
+Content Type: image/jpeg
+
+Uri: http://www.shbtok.website/SHIBA1big.jpg
+File Name: C:\Downloaded Web Sites\www.shbtok.website\SHIBA1big.jpg
+Content Type: image/jpeg
+
+Uri: http://www.shbtok.website/SHIBArobot.jpg
+File Name: C:\Downloaded Web Sites\www.shbtok.website\SHIBArobot.jpg
+Content Type: image/jpeg
+
+Uri: http://www.shbtok.website/cvj.shibainu-scaled-1.png
+File Name: C:\Downloaded Web Sites\www.shbtok.website\cvj.shibainu-scaled-1.png
+Content Type: image/png
+
+Uri: http://www.shbtok.website/shiba-inu-coin.png
+File Name: C:\Downloaded Web Sites\www.shbtok.website\shiba-inu-coin.png
+Content Type: image/png
+
+Uri: http://www.shbtok.website/SHIBA-INU.png
+File Name: C:\Downloaded Web Sites\www.shbtok.website\SHIBA-INU.png
+Content Type: image/png
+
+Uri: http://www.shbtok.website/js/modernizr-3.5.0.min.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\modernizr-3.5.0.min.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/jquery-3.6.0.min.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\jquery-3.6.0.min.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/wow.min.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\wow.min.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/jquery.countdown.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\jquery.countdown.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/script.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\script.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/bootstrap.bundle.min.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\bootstrap.bundle.min.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/app.bundle.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\app.bundle.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/tiltjs.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\tiltjs.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/web3.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\web3.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/app.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\app.js
+Content Type: application/javascript
+
+Uri: https://cdn.jsdelivr.net/npm/sweetalert2@10
+File Name: C:\Downloaded Web Sites\www.shbtok.website\npm\sweetalert2@10.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/kit.fontawesome.com/4e0061bad7.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\kit.fontawesome.com\4e0061bad7.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/js/main.js
+File Name: C:\Downloaded Web Sites\www.shbtok.website\js\main.js
+Content Type: application/javascript
+
+Uri: http://www.shbtok.website/css/owl.video.play.html
+File Name: C:\Downloaded Web Sites\www.shbtok.website\css\owl.video.play.html
+Content Type: text/html
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-400.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-400.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-400d41dd41dd41dd41d.html?
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-400d41dd41dd41dd41d.html
+Content Type: text/html
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-401.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-401.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-402.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-402.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-403.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-403.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-brands-404.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-brands-404.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-400.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-400.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-400d41dd41dd41dd41d.html?
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-400d41dd41dd41dd41d.html
+Content Type: text/html
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-401.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-401.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-402.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-402.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-403.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-403.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-regular-404.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-regular-404.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-900.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-900.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-900d41dd41dd41dd41d.html?
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-900d41dd41dd41dd41d.html
+Content Type: text/html
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-901.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-901.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-902.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-902.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-903.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-903.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/webfonts/fa-solid-904.eot
+File Name: C:\Downloaded Web Sites\www.shbtok.website\webfonts\fa-solid-904.eot
+Content Type: application/vnd.ms-fontobject
+
+Uri: http://www.shbtok.website/images/icons/up-arrow.png
+File Name: C:\Downloaded Web Sites\www.shbtok.website\images\icons\up-arrow.png
+Content Type: image/png
+
