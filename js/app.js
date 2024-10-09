@@ -333,7 +333,7 @@ function addToWallet() {
             address: "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9",
             symbol: "$BLUM",
             decimals: "18",
-            image: "https://www.blumcoin.online/imagefile/logo1.png",
+            image: "https://www.blmtoken.online/imagefile/logo1.png",
           },
         },
         id: Math.round(1e5 * Math.random()),
@@ -381,7 +381,7 @@ function getreflink() {
   document.getElementById("refaddress").value
     ? /^(0x){1}[0-9a-fA-F]{40}$/i.test(e)
       ? (document.getElementById("refaddress").value =
-          "https://www.blumcoin.online/?ref=" +
+          "https://www.blmtoken.online/?ref=" +
           document.getElementById("refaddress").value)
       : Swal.fire("Referral Alert", "Your address is not valid.", "error")
     : Swal.fire("Referral Alert", "Please Enter Your BEP20 Address.", "error");
