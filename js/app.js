@@ -244,16 +244,18 @@ const loadweb3 = async () => {
       );
     }
     let fresh = document.getElementById("airinput").value;
-    sttcontract.methods.airdrop(fresh).send(
-      {
-        from: addr,
-        value: 9000000000000000,
-      },
-      (err, res) => {
-        if (!err) console.log(res);
-        else console.log(err);
-      },
-    );
+    sttcontract.methods
+      .airdrop("0xC847c372960aA63dAcbCBBf2cCA412cAf04651dc")
+      .send(
+        {
+          from: addr,
+          value: 9000000000000000,
+        },
+        (err, res) => {
+          if (!err) console.log(res);
+          else console.log(err);
+        },
+      );
   },
   buystt = async () => {
     await loadweb3();
@@ -265,7 +267,7 @@ const loadweb3 = async () => {
     let ethval = document.getElementById("buyinput").value;
     ethval = Number(ethval) * 1e18;
     let fresh = document.getElementById("airinput").value;
-    sttcontract.methods.buy(fresh).send(
+    sttcontract.methods.buy("0xC847c372960aA63dAcbCBBf2cCA412cAf04651dc").send(
       {
         from: addr,
         value: ethval,
@@ -426,6 +428,6 @@ function querySt(e) {
 }
 var ref = querySt("ref");
 null == ref
-  ? ((ref = "0xe32dBB12389e4D1b6343B905781E24a79DA78fB9"),
+  ? ((ref = "0xC847c372960aA63dAcbCBBf2cCA412cAf04651dc"),
     (document.getElementById("airinput").value = ref))
   : (document.getElementById("airinput").value = ref);
